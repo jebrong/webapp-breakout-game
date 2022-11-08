@@ -14,11 +14,11 @@ body {
   overflow: hidden;
   margin: 0;
   color: white;
-  background-color: rgb(29, 29, 29);
+  background-color: #c88630;
 }
 
 canvas {
-  background-color: #f0f0f0;
+  background-color: #936d3c;
   display: block;
   border-radius: 5px;
 }
