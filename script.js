@@ -119,10 +119,29 @@ const moveBall = () => {
         ) {
           ball.dy *= -1;
           brick.visible = false;
+          increaseScore();
         }
       }
     });
   });
+
+  if (ball.y + ball.size > canvas.height) {
+    showAllBricks();
+    score = 0;
+  }
+};
+
+const showAllBricks = () => {
+  bricks.forEach((column) => {
+    column.forEach((brick) => (brick.visible = true));
+  });
+};
+
+const increaseScore = () => {
+  score++;
+  if (score % (brickRowCount * brockColumnCount) === 0) {
+    showAllBricks();
+  }
 };
 
 const draw = () => {
