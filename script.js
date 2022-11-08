@@ -10,13 +10,6 @@ let score = 0;
 const brickRowCount = 9;
 const brockColumnCount = 5;
 
-rulesBtn.addEventListener("click", () => {
-  rules.classList.add("show");
-});
-closeBtn.addEventListener("click", () => {
-  rules.classList.remove("show");
-});
-
 const brickInfo = {
   w: 70,
   h: 20,
@@ -85,11 +78,60 @@ const drawBricks = () => {
   });
 };
 
+const movePaddle = () => {
+  paddle.x += paddle.dx;
+
+  if (paddle.x + paddle.w > canvas.width) {
+    paddle.x = canvas.width - paddle.w;
+  }
+  if (paddle.x < 0) {
+    paddle.x = 0;
+  }
+};
+
 const draw = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBall();
   drawPath();
   drawScore();
   drawBricks();
 };
 
-draw();
+const update = () => {
+  movePaddle();
+  draw();
+  requestAnimationFrame(update);
+};
+
+update();
+
+const keyDown = (e) => {
+  if (e.key === "Right" || e.key === "ArrowRight") {
+    paddle.dx = paddle.speed;
+  } else if (e.key === "Left" || e.key === "ArrowLeft") {
+    paddle.dx = -paddle.speed;
+  }
+};
+
+const keyUp = (e) => {
+  if (
+    e.key === "Right" ||
+    e.key === "ArrowRight" ||
+    e.key === "Left" ||
+    e.key === "ArrowLeft"
+  ) {
+    paddle.dx = 0;
+  } else {
+    paddle.dx = 0;
+  }
+};
+
+document.addEventListener("keydown", keyDown);
+document.addEventListener("keyup", keyUp);
+
+rulesBtn.addEventListener("click", () => {
+  rules.classList.add("show");
+});
+closeBtn.addEventListener("click", () => {
+  rules.classList.remove("show");
+});
